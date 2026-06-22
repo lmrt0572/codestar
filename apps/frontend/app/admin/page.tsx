@@ -221,11 +221,16 @@ export default async function AdminDashboardPage() {
                     {settings && (
                       <>
                         <span aria-hidden>·</span>
-                        <span>
-                          {t("superAdmin.maxBlocks", {
-                            n: settings.maxBlocksPerPage,
-                          })}
-                        </span>
+                        <GlassChip
+                          variant={settings.signupOpen ? "success" : "default"}
+                          size="sm"
+                        >
+                          {t(
+                            settings.signupOpen
+                              ? "superAdmin.signupOpen"
+                              : "superAdmin.signupClosed"
+                          )}
+                        </GlassChip>
                       </>
                     )}
                   </div>

@@ -7,7 +7,6 @@ import {
   getCoursePages,
   getMyAuthoredCourses,
 } from "@/app/actions/courses";
-import { getSettings } from "@/app/actions/settings";
 import { AdminBreadcrumb, AdminShell } from "@/components/admin/admin-shell";
 import { CourseEditor } from "@/components/admin/course-editor";
 import { requireRole } from "@/components/admin/role-guard";
@@ -34,17 +33,15 @@ export default async function CourseBlocksPage({ params }: PageProps) {
   const course = list.find((c) => c.id === id);
   if (!course) notFound();
 
-  const [pages, settings] = await Promise.all([
-    getCoursePages(course.id),
-    getSettings(),
-  ]);
+  const pages = await getCoursePages(course.id);
   const sortedPages = [...pages]
     .sort((a, b) => a.orderIndex - b.orderIndex)
     .map((p) => ({
       ...p,
       blocks: [...p.blocks].sort((a, b) => a.orderIndex - b.orderIndex),
     }));
-  const maxBlocksPerPage = settings?.maxBlocksPerPage ?? 50;
+  // Course-builder block cap (was an instance setting; now a fixed default).
+  const maxBlocksPerPage = 50;
 
   return (
     <AdminShell>

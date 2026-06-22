@@ -291,13 +291,131 @@
   "adminSettings": {
     "kicker": "ADMIN · PARAMÈTRES",
     "title": "Paramètres",
-    "description": "Réglages de l'instance, modifiables par les administrateurs.",
-    "courseBuilderSection": "Course Builder",
-    "maxBlocksLabel": "Nombre max de blocs par page",
-    "maxBlocksHelper": "Entre {min} et {max}. Limite le nombre de blocs autorisés par page de cours.",
-    "maxBlocksRange": "La valeur doit être un entier entre {min} et {max}.",
+    "description": "Branding, thème et réglages de l'instance, modifiables par les administrateurs.",
     "save": "Enregistrer",
-    "saved": "✓ Enregistré"
+    "saving": "Enregistrement…",
+    "saved": "Modifications enregistrées",
+    "discard": "Annuler",
+    "unsaved": "Modifications non enregistrées",
+    "nav": {
+      "identity": "Identité",
+      "theme": "Thème",
+      "hero": "Accueil & SEO",
+      "access": "Accès",
+      "media": "Médias",
+      "ai": "IA"
+    },
+    "sectionDescription": {
+      "identity": "Nom, logo, couleur d'accent et police de l'instance.",
+      "theme": "Palette de couleurs pour les modes clair et sombre.",
+      "hero": "Texte de la page d'accueil et métadonnées de référencement.",
+      "access": "Règles d'accès et d'inscription à la plateforme.",
+      "media": "Quotas de stockage des fichiers téléversés.",
+      "ai": "Connexion au fournisseur d'IA pour la génération de cours."
+    },
+    "preview": {
+      "title": "Aperçu en direct",
+      "themeSwitch": "Mode d'aperçu",
+      "light": "Clair",
+      "dark": "Sombre",
+      "heroFallback": "Apprenez, créez, partagez.",
+      "ctaFallback": "Commencer"
+    },
+    "identity": {
+      "name": "Nom de l'instance",
+      "tagline": "Slogan",
+      "logo": "Logo",
+      "logoHelper": "Symbole affiché à côté du nom.",
+      "logoPreset": {
+        "star": "Étoile",
+        "alpha": "Alpha",
+        "flame": "Flamme",
+        "hash": "Dièse"
+      },
+      "locale": "Langue par défaut",
+      "localeOption": {
+        "en": "Anglais",
+        "fr": "Français"
+      },
+      "accent": "Couleur d'accent",
+      "accentHelper": "Couleur principale des boutons et liens.",
+      "font": "Police",
+      "fontHelper": "Paire de polices (titres · texte).",
+      "logoMode": {
+        "preset": "Preset",
+        "image": "Image"
+      },
+      "logoUpload": "Téléverser une image",
+      "logoReplace": "Remplacer l'image",
+      "uploadError": "Échec du téléversement"
+    },
+    "theme": {
+      "modeSwitch": "Mode édité",
+      "light": "Clair",
+      "dark": "Sombre",
+      "reset": "Réinitialiser",
+      "group": {
+        "backgrounds": "Arrière-plans",
+        "text": "Texte",
+        "status": "États"
+      },
+      "token": {
+        "bgBase": "Fond principal",
+        "bgMesh1": "Halo 1",
+        "bgMesh2": "Halo 2",
+        "bgMesh3": "Halo 3",
+        "text": "Texte",
+        "textSoft": "Texte adouci",
+        "muted": "Texte discret",
+        "success": "Succès",
+        "warning": "Avertissement",
+        "danger": "Danger",
+        "green": "Vert",
+        "tip": "Astuce"
+      }
+    },
+    "hero": {
+      "heroGroup": "Page d'accueil",
+      "heroTitle": "Titre principal",
+      "heroTitleHelper": "Laissez vide pour utiliser le texte par défaut.",
+      "heroSubtitle": "Sous-titre",
+      "heroCta": "Bouton d'action",
+      "seoGroup": "Référencement (SEO)",
+      "metaTitle": "Titre de la page",
+      "metaTitleHelper": "Idéalement moins de 60 caractères.",
+      "metaDescription": "Méta-description",
+      "metaDescriptionHelper": "Idéalement moins de 160 caractères.",
+      "favicon": "Favicon",
+      "faviconHelper": "URL de l'icône affichée dans l'onglet du navigateur.",
+      "faviconUpload": "Téléverser une image",
+      "uploadError": "Échec du téléversement"
+    },
+    "access": {
+      "signupOpen": "Inscriptions ouvertes",
+      "signupOpenHelper": "Autoriser la création de compte par de nouveaux utilisateurs.",
+      "open": "Ouvertes",
+      "closed": "Fermées"
+    },
+    "media": {
+      "userQuota": "Quota par utilisateur",
+      "userQuotaHelper": "Stockage maximum par utilisateur.",
+      "instanceQuota": "Quota de l'instance",
+      "instanceQuotaHelper": "Stockage maximum cumulé pour l'instance."
+    },
+    "ai": {
+      "apiUrl": "URL de l'API",
+      "model": "Modèle",
+      "apiKey": "Clé API",
+      "apiKeyHelper": "Laissez vide pour conserver la clé existante.",
+      "keyConfigured": "Configurée",
+      "keyMissing": "Aucune clé",
+      "keyPlaceholder": "Collez votre clé API",
+      "keyPlaceholderSet": "•••••••••• (remplacer)",
+      "temperature": "Température",
+      "temperatureHelper": "Créativité des réponses (0 = strict, 2 = créatif).",
+      "maxTokens": "Tokens max",
+      "maxTokensHelper": "Longueur maximale des réponses générées."
+    }
   },
   "adminAi": {
     "breadcrumbAdmin": "Admin",
@@ -536,8 +654,9 @@
     "superAdmin": {
       "kicker": "SUPER-ADMIN",
       "title": "Instance & branding · {name}",
-      "maxBlocks": "Blocs max/page : {n}",
-      "manageRoles": "Gérer les rôles"
+      "manageRoles": "Gérer les rôles",
+      "signupOpen": "Inscriptions ouvertes",
+      "signupClosed": "Inscriptions fermées"
     },
     "recentTitle": "Cours récents",
     "groupsTitle": "Mes groupes",

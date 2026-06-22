@@ -5,7 +5,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { getInstanceBranding } from "@/app/actions/instance";
 import { getMyAuthoredCourses } from "@/app/actions/courses";
 import { getMyGroups } from "@/app/actions/groups";
-import { getSettings } from "@/app/actions/settings";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { requireRole } from "@/components/admin/role-guard";
 import { CourseMeta } from "@/components/course/course-meta";
@@ -30,12 +29,11 @@ export const metadata: Metadata = { title: "Studio" };
 export default async function StudioPage() {
   await requireRole("TEACHER");
   const locale = (await getLocale()) as "fr" | "en";
-  const [t, branding, courses, groups, settings] = await Promise.all([
+  const [t, branding, courses, groups] = await Promise.all([
     getTranslations("studio"),
     getInstanceBranding(),
     getMyAuthoredCourses(),
     getMyGroups(),
-    getSettings(),
   ]);
 
   const published = courses.filter((c) => c.status === "PUBLISHED").length;
@@ -182,23 +180,6 @@ export default async function StudioPage() {
             )}
           </div>
 
-          {settings && (
-            <div>
-              <h2 className="mb-4 font-display text-xl tracking-tight text-text md:text-2xl">
-                {t("settingsTitle")}
-              </h2>
-              <GlassCard variant="default">
-                <GlassCardContent className="flex items-center justify-between gap-3 p-5">
-                  <span className="text-[0.9rem] text-text-soft">
-                    {t("maxBlocks")}
-                  </span>
-                  <span className="font-display text-[1.6rem] text-text">
-                    {settings.maxBlocksPerPage}
-                  </span>
-                </GlassCardContent>
-              </GlassCard>
-            </div>
-          )}
         </section>
       </div>
     </AdminShell>

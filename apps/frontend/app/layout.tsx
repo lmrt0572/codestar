@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Fraunces,
+  Instrument_Serif,
+  Inter,
+  JetBrains_Mono,
+  Outfit,
+} from "next/font/google";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -11,6 +17,7 @@ import { BrandingProvider } from "@/components/branding-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
 import { MeshBackground } from "@/components/ui/mesh-background";
+import { brandingThemeCss } from "@/lib/branding-css";
 import { SITE_URL } from "@/lib/site";
 import { DEFAULT_THEME, isTheme, resolveTheme, THEME_COOKIE } from "@/lib/theme";
 
@@ -38,54 +45,72 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Codestar — Open-source e-learning, hosted by you",
-    template: "%s · Codestar",
-  },
-  description:
-    "Codestar is an open-source e-learning platform under GPL v3. Self-host your instance via Docker. Your data never leaves your server.",
-  applicationName: "Codestar",
-  keywords: [
-    "open-source e-learning",
-    "self-hosted LMS",
-    "GPL v3 learning platform",
-    "Moodle alternative",
-    "educational data sovereignty",
-    "Docker LMS",
-    "block course editor",
-    "learner leaderboard",
-    "Codestar",
-  ],
-  authors: [
-    { name: "Codestar Project", url: "https://github.com/CodeStar-Project" },
-  ],
-  creator: "Codestar Project",
-  publisher: "Codestar Project",
-  category: "education",
-  alternates: { canonical: SITE_URL },
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    siteName: "Codestar",
-    title: "Codestar — Sovereign e-learning, on your servers",
-    description:
-      "Open-source e-learning platform, self-hosted via Docker, under GPL v3. Your data stays with you.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Codestar — Sovereign e-learning",
-    description:
-      "Open-source e-learning platform, hosted by you, under GPL v3.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
-  icons: { icon: "/favicon.ico" },
-};
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  const branding = await getInstanceBranding();
+  const title = branding.metaTitle ?? `${branding.name} — ${branding.tagline}`;
+  const description = branding.metaDescription ?? branding.tagline;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: title,
+      template: `%s · ${branding.name}`,
+    },
+    description,
+    applicationName: branding.name,
+    keywords: [
+      "open-source e-learning",
+      "self-hosted LMS",
+      "GPL v3 learning platform",
+      "Moodle alternative",
+      "educational data sovereignty",
+      "Docker LMS",
+      "block course editor",
+      "learner leaderboard",
+      branding.name,
+    ],
+    authors: [
+      { name: "Codestar Project", url: "https://github.com/CodeStar-Project" },
+    ],
+    creator: "Codestar Project",
+    publisher: "Codestar Project",
+    category: "education",
+    alternates: { canonical: SITE_URL },
+    openGraph: {
+      type: "website",
+      url: SITE_URL,
+      siteName: branding.name,
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+    icons: { icon: branding.favicon ?? "/favicon.ico" },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -129,14 +154,16 @@ export default async function RootLayout({
     <html
       lang={locale}
       data-theme={resolvedTheme}
-      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} h-full antialiased`}
-      style={
-        {
-          "--color-accent-raw": branding.accent,
-        } as React.CSSProperties
-      }
+      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} ${outfit.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg-base text-text font-sans">
+        {/* Branding tokens (accent, theme colors, fonts) override globals.css
+            for both light/dark. React hoists this <style> to <head>; the
+            html[data-theme] selectors win by specificity regardless of order. */}
+        <style
+          id="branding-theme"
+          dangerouslySetInnerHTML={{ __html: brandingThemeCss(branding) }}
+        />
         <ThemeScript />
         <script
           type="application/ld+json"

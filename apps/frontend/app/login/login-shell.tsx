@@ -16,7 +16,7 @@ import {
   signInAction,
   signUpAction,
 } from "@/app/actions/auth";
-import { BrandMark, type LogoPreset } from "@/components/brand-mark";
+import { BrandMark } from "@/components/brand-mark";
 import { useInstanceBranding } from "@/components/branding-provider";
 import { AuroraLayer } from "@/components/home/aurora-layer";
 import { GlassChip } from "@/components/ui/glass-chip";
@@ -491,7 +491,6 @@ function ValidCheck({ show }: { show: boolean }) {
 function DecorativeAside() {
   const branding = useInstanceBranding();
   const t = useTranslations("login.aside");
-  const preset = branding.logo.value as LogoPreset;
 
   const facts = [
     t("facts.openSource"),
@@ -526,7 +525,7 @@ function DecorativeAside() {
           className="fx-rise flex items-center gap-2.5"
           style={{ animationDelay: "0.1s" }}
         >
-          <BrandMark size={34} preset={preset} accent={branding.accent} />
+          <BrandMark size={34} logo={branding.logo} accent={branding.accent} />
           <span className="text-[1.05rem] font-semibold text-text">
             {branding.name}
           </span>
