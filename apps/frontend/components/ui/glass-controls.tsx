@@ -111,8 +111,12 @@ export function ColorField({
   const swatchValue = valid && value.length === 7 ? value : "#000000";
 
   return (
-    <div className="w-full">
-      <GlassLabel htmlFor={id}>{label}</GlassLabel>
+    <div className="group w-full">
+      <GlassLabel htmlFor={id}>
+        <span className="transition-colors group-focus-within:text-[color:var(--color-accent)]">
+          {label}
+        </span>
+      </GlassLabel>
       <div className="flex items-center gap-2">
         <span className="relative inline-flex h-10 w-10 shrink-0 overflow-hidden rounded-[var(--r-sm)] border border-[color:var(--glass-border)]">
           <input

@@ -297,6 +297,7 @@
     "saved": "Modifications enregistrées",
     "discard": "Annuler",
     "unsaved": "Modifications non enregistrées",
+    "resetSection": "Réinitialiser la section",
     "nav": {
       "identity": "Identité",
       "theme": "Thème",
@@ -372,6 +373,20 @@
         "danger": "Danger",
         "green": "Vert",
         "tip": "Astuce"
+      },
+      "tokenDesc": {
+        "bgBase": "Couleur de fond principale des pages.",
+        "bgMesh1": "Halo de dégradé en arrière-plan.",
+        "bgMesh2": "Deuxième halo de dégradé.",
+        "bgMesh3": "Troisième halo de dégradé.",
+        "text": "Couleur du texte principal.",
+        "textSoft": "Texte secondaire, moins contrasté.",
+        "muted": "Texte discret (légendes, aides).",
+        "success": "Messages de succès et validations.",
+        "warning": "Avertissements et alertes légères.",
+        "danger": "Erreurs et actions destructrices.",
+        "green": "Accent vert (progression, réussite).",
+        "tip": "Astuces et encadrés d'information."
       }
     },
     "hero": {

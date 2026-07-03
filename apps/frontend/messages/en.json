@@ -297,6 +297,7 @@
     "saved": "Changes saved",
     "discard": "Discard",
     "unsaved": "Unsaved changes",
+    "resetSection": "Reset section",
     "nav": {
       "identity": "Identity",
       "theme": "Theme",
@@ -372,6 +373,20 @@
         "danger": "Danger",
         "green": "Green",
         "tip": "Tip"
+      },
+      "tokenDesc": {
+        "bgBase": "Main page background color.",
+        "bgMesh1": "Background gradient glow.",
+        "bgMesh2": "Second gradient glow.",
+        "bgMesh3": "Third gradient glow.",
+        "text": "Primary text color.",
+        "textSoft": "Secondary, lower-contrast text.",
+        "muted": "Subtle text (captions, hints).",
+        "success": "Success messages and confirmations.",
+        "warning": "Warnings and light alerts.",
+        "danger": "Errors and destructive actions.",
+        "green": "Green accent (progress, achievements).",
+        "tip": "Tips and info callouts."
       }
     },
     "hero": {

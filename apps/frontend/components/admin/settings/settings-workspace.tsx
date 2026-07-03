@@ -20,6 +20,7 @@ import {
   StarIcon,
   TypeIcon,
 } from "@/components/ui/icons";
+import { DEFAULT_INSTANCE, DEFAULT_THEME_TOKENS } from "@/lib/instance";
 import { cn } from "@/lib/utils";
 import type {
   InstanceBranding,
@@ -28,7 +29,6 @@ import type {
   UpdateSettingsPayload,
 } from "@/lib/types";
 
-import { BrandingPreview } from "./branding-preview";
 import {
   AccessSection,
   AiSection,
@@ -37,6 +37,26 @@ import {
   MediaSection,
   ThemeSection,
 } from "./settings-sections";
+
+// Default values used by the per-section reset (platform settings side).
+const DEFAULT_SETTINGS: Pick<
+  InstanceSettings,
+  | "signupOpen"
+  | "mediaUserQuotaMb"
+  | "mediaInstanceQuotaMb"
+  | "aiApiUrl"
+  | "aiModel"
+  | "aiMaxTokens"
+  | "aiTemperature"
+> = {
+  signupOpen: true,
+  mediaUserQuotaMb: 100,
+  mediaInstanceQuotaMb: 5000,
+  aiApiUrl: "",
+  aiModel: "",
+  aiMaxTokens: 4096,
+  aiTemperature: 0.7,
+};
 
 type SectionId =
   | "identity"
@@ -122,10 +142,8 @@ export function SettingsWorkspace({
   const [apiKey, setApiKey] = React.useState("");
 
   const [active, setActive] = React.useState<SectionId>("identity");
-  // Shared light/dark mode for the Theme editor and the live preview.
-  const [previewMode, setPreviewMode] = React.useState<"light" | "dark">(
-    "light"
-  );
+  // Light/dark mode currently edited in the Theme section.
+  const [themeMode, setThemeMode] = React.useState<"light" | "dark">("light");
   const [pending, start] = React.useTransition();
   const [error, setError] = React.useState<string | null>(null);
   const [saved, setSaved] = React.useState(false);
@@ -196,6 +214,58 @@ export function SettingsWorkspace({
     setSaved(false);
   }
 
+  // Reset the active section's fields back to their default values.
+  function resetSection(id: SectionId) {
+    switch (id) {
+      case "identity":
+        patchBranding({
+          name: DEFAULT_INSTANCE.name,
+          tagline: DEFAULT_INSTANCE.tagline,
+          logo: DEFAULT_INSTANCE.logo,
+          accent: DEFAULT_INSTANCE.accent,
+          locale: DEFAULT_INSTANCE.locale,
+          fontPreset: DEFAULT_INSTANCE.fontPreset,
+        });
+        break;
+      case "theme":
+        patchBranding({
+          theme: {
+            light: { ...DEFAULT_THEME_TOKENS.light },
+            dark: { ...DEFAULT_THEME_TOKENS.dark },
+          },
+        });
+        break;
+      case "hero":
+        patchBranding({
+          heroTitle: null,
+          heroSubtitle: null,
+          heroCta: null,
+          metaTitle: null,
+          metaDescription: null,
+          favicon: null,
+        });
+        break;
+      case "access":
+        patchSettings({ signupOpen: DEFAULT_SETTINGS.signupOpen });
+        break;
+      case "media":
+        patchSettings({
+          mediaUserQuotaMb: DEFAULT_SETTINGS.mediaUserQuotaMb,
+          mediaInstanceQuotaMb: DEFAULT_SETTINGS.mediaInstanceQuotaMb,
+        });
+        break;
+      case "ai":
+        patchSettings({
+          aiApiUrl: DEFAULT_SETTINGS.aiApiUrl,
+          aiModel: DEFAULT_SETTINGS.aiModel,
+          aiMaxTokens: DEFAULT_SETTINGS.aiMaxTokens,
+          aiTemperature: DEFAULT_SETTINGS.aiTemperature,
+        });
+        setApiKey("");
+        break;
+    }
+  }
+
   function save() {
     setError(null);
     setSaved(false);
@@ -238,7 +308,7 @@ export function SettingsWorkspace({
   }
 
   return (
-    <div className="lg:grid lg:grid-cols-[180px_minmax(0,1fr)_300px] lg:gap-6">
+    <div className="lg:grid lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-6">
       {/* ── Rail nav ── */}
       <nav
         aria-label={t("title")}
@@ -335,13 +405,23 @@ export function SettingsWorkspace({
 
         <GlassCard variant="default">
           <GlassCardContent className="p-6">
-            <header className="mb-5">
-              <h2 className="font-display text-xl text-text">
-                {t(`nav.${active}`)}
-              </h2>
-              <p className="mt-1 text-[0.85rem] text-text-soft">
-                {t(`sectionDescription.${active}`)}
-              </p>
+            <header className="mb-5 flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h2 className="font-display text-xl text-text">
+                  {t(`nav.${active}`)}
+                </h2>
+                <p className="mt-1 text-[0.85rem] text-text-soft">
+                  {t(`sectionDescription.${active}`)}
+                </p>
+              </div>
+              <GlassButton
+                variant="ghost"
+                size="sm"
+                onClick={() => resetSection(active)}
+                className="shrink-0"
+              >
+                {t("resetSection")}
+              </GlassButton>
             </header>
 
             {active === "identity" && (
@@ -351,8 +431,8 @@ export function SettingsWorkspace({
               <ThemeSection
                 branding={branding}
                 patch={patchBranding}
-                mode={previewMode}
-                onMode={setPreviewMode}
+                mode={themeMode}
+                onMode={setThemeMode}
               />
             )}
             {active === "hero" && (
@@ -378,17 +458,6 @@ export function SettingsWorkspace({
           </GlassCardContent>
         </GlassCard>
       </div>
-
-      {/* ── Live preview ── */}
-      <aside className="mt-6 lg:mt-0">
-        <div className="lg:sticky lg:top-24">
-          <BrandingPreview
-            branding={branding}
-            theme={previewMode}
-            onTheme={setPreviewMode}
-          />
-        </div>
-      </aside>
     </div>
   );
 }

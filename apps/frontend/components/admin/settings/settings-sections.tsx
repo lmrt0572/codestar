@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 
 import { ImageUploader } from "@/components/block-kinds/image-uploader";
 import { BrandMark } from "@/components/brand-mark";
-import { GlassButton } from "@/components/ui/glass-button";
 import {
   ColorField,
   GlassToggle,
@@ -22,7 +21,6 @@ import {
 import { GlassChip } from "@/components/ui/glass-chip";
 import { ImageIcon, KeyIcon } from "@/components/ui/icons";
 import { FONT_PRESETS } from "@/lib/fonts";
-import { DEFAULT_THEME_TOKENS } from "@/lib/instance";
 import type {
   InstanceBranding,
   InstanceSettings,
@@ -245,40 +243,29 @@ export function ThemeSection({
     });
   }
 
-  function resetMode() {
-    patch({
-      theme: { ...branding.theme, [mode]: { ...DEFAULT_THEME_TOKENS[mode] } },
-    });
-  }
-
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between gap-3">
-        <div
-          role="group"
-          aria-label={t("modeSwitch")}
-          className="inline-flex rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-0.5"
-        >
-          {(["light", "dark"] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              aria-pressed={mode === m}
-              onClick={() => onMode(m)}
-              className={
-                "cursor-pointer rounded-full px-4 py-1.5 text-[0.8rem] font-medium capitalize transition-colors duration-150 " +
-                (mode === m
-                  ? "bg-[color:var(--color-accent)] text-[color:var(--color-accent-fg)]"
-                  : "text-text-soft hover:text-text")
-              }
-            >
-              {t(m)}
-            </button>
-          ))}
-        </div>
-        <GlassButton variant="ghost" size="sm" onClick={resetMode}>
-          {t("reset")}
-        </GlassButton>
+      <div
+        role="group"
+        aria-label={t("modeSwitch")}
+        className="inline-flex rounded-full border border-[color:var(--glass-border)] bg-[color:var(--glass-bg)] p-0.5"
+      >
+        {(["light", "dark"] as const).map((m) => (
+          <button
+            key={m}
+            type="button"
+            aria-pressed={mode === m}
+            onClick={() => onMode(m)}
+            className={
+              "cursor-pointer rounded-full px-4 py-1.5 text-[0.8rem] font-medium capitalize transition-colors duration-150 " +
+              (mode === m
+                ? "bg-[color:var(--color-accent)] text-[color:var(--color-accent-fg)]"
+                : "text-text-soft hover:text-text")
+            }
+          >
+            {t(m)}
+          </button>
+        ))}
       </div>
 
       {TOKEN_GROUPS.map(({ group, keys }) => (
@@ -292,6 +279,7 @@ export function ThemeSection({
                 key={key}
                 id={`tk-${mode}-${key}`}
                 label={t(`token.${key}`)}
+                helper={t(`tokenDesc.${key}`)}
                 value={tokens[key]}
                 onChange={(hex) => setToken(key, hex)}
               />
