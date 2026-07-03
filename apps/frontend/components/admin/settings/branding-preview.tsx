@@ -1,5 +1,7 @@
 "use client";
 
+// Sticky live preview reflecting unsaved branding changes; light/dark shared with the Theme section.
+
 import type * as React from "react";
 import { useTranslations } from "next-intl";
 
@@ -9,11 +11,6 @@ import { brandingToCssVars, type ResolvedTheme } from "@/lib/branding-css";
 import { cn } from "@/lib/utils";
 import type { InstanceBranding } from "@/lib/types";
 
-/**
- * Sticky live preview of the branding — reacts to unsaved changes (accent,
- * theme tokens, fonts, logo, hero copy). The light/dark switch is shared with
- * the Theme section so editing a mode's colors always shows here immediately.
- */
 export function BrandingPreview({
   branding,
   theme,

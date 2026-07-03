@@ -1,5 +1,7 @@
 "use client";
 
+// Invitation codes panel — list plus a create form with optimistic insert.
+
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -21,6 +23,7 @@ interface Labels {
   noExpiry: string;
   noInvitations: string;
   copyCode: string;
+  createError: string;
 }
 
 interface InvitationsPanelProps {
@@ -70,7 +73,7 @@ export function InvitationsPanel({
         form.reset();
         router.refresh();
       } else {
-        setError(res.error ?? "Erreur lors de la création.");
+        setError(res.error ?? labels.createError);
       }
     });
   }

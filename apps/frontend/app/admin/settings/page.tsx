@@ -1,3 +1,5 @@
+// Admin settings page — loads branding + platform settings, renders the editor.
+
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 

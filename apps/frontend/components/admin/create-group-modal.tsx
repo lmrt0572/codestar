@@ -1,5 +1,7 @@
 "use client";
 
+// Modal form to create a group (name, slug, date range).
+
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +20,7 @@ export interface CreateGroupModalLabels {
   endsAt: string;
   create: string;
   cancel: string;
+  error: string;
 }
 
 interface CreateGroupModalProps {
@@ -50,7 +53,7 @@ export function CreateGroupModal({ open, onClose, labels }: CreateGroupModalProp
         router.refresh();
         onClose();
       } else {
-        setError(res.error ?? "Une erreur est survenue.");
+        setError(res.error ?? labels.error);
       }
     });
   }

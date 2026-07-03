@@ -605,7 +605,10 @@
     "kicker": "Cours enregistré",
     "description": "Les cours que vous avez enregistrés pour les retrouver plus tard.",
     "empty": "Aucun cours enregistré pour l'instant. Ouvrez un cours et cliquez sur « Enregistrer le cours ».",
-    "open": "Ouvrir le cours"
+    "open": "Ouvrir le cours",
+    "viewBlock": "Ouvrir dans le cours",
+    "remove": "Retirer",
+    "bookmarksCount": "{count, plural, one {# cours enregistré} other {# cours enregistrés}}"
   },
   "dash": {
     "title": "Mes progrès",
@@ -811,6 +814,9 @@
       "invitations": "Invitations",
       "deleteConfirm": "Supprimer ce groupe définitivement ?",
       "deleteBtn": "Supprimer",
+      "deleteError": "Erreur lors de la suppression.",
+      "dateSince": "Depuis {date}",
+      "dateUntil": "Jusqu'au {date}",
       "form": {
         "title": "Créer un groupe",
         "name": "Nom du groupe",
@@ -821,7 +827,8 @@
         "startsAt": "Date de début",
         "endsAt": "Date de fin",
         "create": "Créer",
-        "cancel": "Annuler"
+        "cancel": "Annuler",
+        "error": "Une erreur est survenue."
       },
       "hub": {
         "kicker": "Groupe · {name}",
@@ -838,7 +845,8 @@
         "expires": "Expire le {date}",
         "noExpiry": "Pas d'expiration",
         "noInvitations": "Aucun code actif.",
-        "copyCode": "Copier"
+        "copyCode": "Copier",
+        "createError": "Erreur lors de la création."
       }
     }
   }

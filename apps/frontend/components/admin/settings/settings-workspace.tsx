@@ -1,5 +1,7 @@
 "use client";
 
+// Admin settings editor — section rail, dirty-tracking save bar, live branding preview.
+
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";

@@ -814,6 +814,9 @@
       "invitations": "Invitations",
       "deleteConfirm": "Permanently delete this group?",
       "deleteBtn": "Delete",
+      "deleteError": "Failed to delete the group.",
+      "dateSince": "Since {date}",
+      "dateUntil": "Until {date}",
       "form": {
         "title": "Create a group",
         "name": "Group name",
@@ -824,7 +827,8 @@
         "startsAt": "Start date",
         "endsAt": "End date",
         "create": "Create",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "error": "Something went wrong."
       },
       "hub": {
         "kicker": "Group · {name}",
@@ -841,7 +845,8 @@
         "expires": "Expires {date}",
         "noExpiry": "No expiry",
         "noInvitations": "No active codes.",
-        "copyCode": "Copy"
+        "copyCode": "Copy",
+        "createError": "Failed to create the code."
       }
     }
   }

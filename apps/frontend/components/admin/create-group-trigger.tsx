@@ -1,5 +1,7 @@
 "use client";
 
+// Button that opens the create-group modal.
+
 import { useState } from "react";
 
 import { CreateGroupModal, type CreateGroupModalLabels } from "@/components/admin/create-group-modal";

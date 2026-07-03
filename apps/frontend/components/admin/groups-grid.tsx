@@ -1,7 +1,10 @@
 "use client";
 
+// Groups grid — one card per group with member/curriculum links and admin delete.
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { useState, useTransition } from "react";
 
 import { deleteGroup } from "@/app/actions/groups";
@@ -22,6 +25,9 @@ interface Labels {
   curriculum: string;
   deleteConfirm: string;
   deleteBtn: string;
+  deleteError: string;
+  dateSince: string;
+  dateUntil: string;
   empty: string;
 }
 
@@ -52,21 +58,28 @@ function slugPalette(slug: string) {
   return PALETTE[h % PALETTE.length];
 }
 
-function formatDateRange(startsAt: string | null, endsAt: string | null) {
+// Builds a localized "since/until" range from optional start/end dates.
+function formatDateRange(
+  startsAt: string | null,
+  endsAt: string | null,
+  locale: string,
+  labels: Labels
+) {
   const fmt = (d: string) =>
-    new Date(d).toLocaleDateString("fr-FR", { month: "short", year: "numeric" });
+    new Date(d).toLocaleDateString(locale, { month: "short", year: "numeric" });
   if (startsAt && endsAt) return `${fmt(startsAt)} → ${fmt(endsAt)}`;
-  if (startsAt) return `Depuis ${fmt(startsAt)}`;
-  if (endsAt) return `Jusqu'au ${fmt(endsAt)}`;
+  if (startsAt) return labels.dateSince.replace("{date}", fmt(startsAt));
+  if (endsAt) return labels.dateUntil.replace("{date}", fmt(endsAt));
   return null;
 }
 
 function GroupCard({ group: g, isAdmin, labels }: GroupCardProps) {
   const router = useRouter();
+  const locale = useLocale();
   const [pending, start] = useTransition();
   const [error, setError] = useState("");
   const palette = slugPalette(g.slug);
-  const dateLabel = formatDateRange(g.startsAt, g.endsAt);
+  const dateLabel = formatDateRange(g.startsAt, g.endsAt, locale, labels);
 
   function handleDelete() {
     if (!confirm(`${labels.deleteConfirm}\n\n"${g.name}"`)) return;
@@ -74,7 +87,7 @@ function GroupCard({ group: g, isAdmin, labels }: GroupCardProps) {
     start(async () => {
       const res = await deleteGroup(g.id);
       if (!res.ok) {
-        setError(res.error ?? "Erreur lors de la suppression.");
+        setError(res.error ?? labels.deleteError);
         return;
       }
       router.refresh();

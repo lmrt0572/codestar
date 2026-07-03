@@ -1,5 +1,7 @@
 "use client";
 
+// Settings sections: identity, theme, hero/SEO, access, media, AI.
+
 import * as React from "react";
 import { useTranslations } from "next-intl";
 

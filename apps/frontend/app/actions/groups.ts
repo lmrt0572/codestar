@@ -1,5 +1,7 @@
 "use server";
 
+// Server actions for groups: CRUD, members, curriculum, invitations, stats.
+
 import { ApiError, apiFetch, apiFetchText } from "@/lib/api";
 import type { CourseSummary, GroupResponse, GroupSummary } from "@/lib/types";
 

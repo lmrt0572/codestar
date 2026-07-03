@@ -1,3 +1,5 @@
+// Group hub — quick links to members/curriculum and the invitations panel.
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -86,6 +88,7 @@ export default async function GroupHubPage({ params }: PageProps) {
           noExpiry: t("hub.noExpiry"),
           noInvitations: t("hub.noInvitations"),
           copyCode: t("hub.copyCode"),
+          createError: t("hub.createError"),
         }}
       />
     </AdminShell>

@@ -1,3 +1,5 @@
+// Groups list page — all groups for admins, own groups otherwise.
+
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -42,6 +44,7 @@ export default async function GroupsPage() {
                 endsAt: t("form.endsAt"),
                 create: t("form.create"),
                 cancel: t("form.cancel"),
+                error: t("form.error"),
               }}
             />
           ) : null
@@ -56,6 +59,9 @@ export default async function GroupsPage() {
           curriculum: t("curriculum"),
           deleteConfirm: t("deleteConfirm"),
           deleteBtn: t("deleteBtn"),
+          deleteError: t("deleteError"),
+          dateSince: t("dateSince"),
+          dateUntil: t("dateUntil"),
           empty: t("empty"),
         }}
       />
